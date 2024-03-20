@@ -144,6 +144,11 @@ void attachBrk(std::shared_ptr<J3DModelInstance> instance, std::shared_ptr<J3DAn
     instance->SetRegisterColorAnimation(anim);
 }
 
+void detachBrk(std::shared_ptr<J3DModelInstance> instance){
+    if(!init) return;
+    instance->SetRegisterColorAnimation(nullptr);
+}
+
 std::shared_ptr<J3DAnimation::J3DColorAnimationInstance> LoadBrk(py::bytes data){
     if(!init) return nullptr;
 
@@ -191,6 +196,11 @@ void attachBtp(std::shared_ptr<J3DModelInstance> instance, std::string path){
 void attachBtp(std::shared_ptr<J3DModelInstance> instance, std::shared_ptr<J3DAnimation::J3DTexIndexAnimationInstance> anim){
     if(!init) return;
     instance->SetTexIndexAnimation(anim);
+}
+
+void detachBtp(std::shared_ptr<J3DModelInstance> instance){
+    if(!init) return;
+    instance->SetTexIndexAnimation(nullptr);
 }
 
 std::shared_ptr<J3DAnimation::J3DTexIndexAnimationInstance> LoadBtp(py::bytes data){
@@ -242,6 +252,11 @@ void attachBtk(std::shared_ptr<J3DModelInstance> instance, std::shared_ptr<J3DAn
     instance->SetTexMatrixAnimation(anim);
 }
 
+void detachBtk(std::shared_ptr<J3DModelInstance> instance){
+    if(!init) return;
+    instance->SetTexMatrixAnimation(nullptr);
+}
+
 std::shared_ptr<J3DAnimation::J3DTexMatrixAnimationInstance> LoadBtk(py::bytes data){
     if(!init) return nullptr;
 
@@ -291,6 +306,11 @@ void attachBck(std::shared_ptr<J3DModelInstance> instance, std::shared_ptr<J3DAn
     instance->SetJointAnimation(anim);
 }
 
+void detachBck(std::shared_ptr<J3DModelInstance> instance){
+    if(!init) return;
+    instance->SetJointAnimation(nullptr);
+}
+
 void attachBca(std::shared_ptr<J3DModelInstance> instance, py::bytes data){
     if(!init) return;
 
@@ -316,6 +336,11 @@ void attachBca(std::shared_ptr<J3DModelInstance> instance, std::string path){
 void attachBca(std::shared_ptr<J3DModelInstance> instance, std::shared_ptr<J3DAnimation::J3DJointFullAnimationInstance> anim){
     if(!init) return;
     instance->SetJointFullAnimation(anim);
+}
+
+void detachBca(std::shared_ptr<J3DModelInstance> instance){
+    if(!init) return;
+    instance->SetJointFullAnimation(nullptr);
 }
 
 std::shared_ptr<J3DAnimation::J3DJointFullAnimationInstance> LoadBca(py::bytes data){
@@ -365,6 +390,11 @@ void attachBva(std::shared_ptr<J3DModelInstance> instance, std::string path){
 void attachBva(std::shared_ptr<J3DModelInstance> instance, std::shared_ptr<J3DAnimation::J3DVisibilityAnimationInstance> anim){
     if(!init) return;
     instance->SetVisibilityAnimation(anim);
+}
+
+void detachBva(std::shared_ptr<J3DModelInstance> instance){
+    if(!init) return;
+    instance->SetVisibilityAnimation(nullptr);
 }
 
 std::shared_ptr<J3DAnimation::J3DVisibilityAnimationInstance> LoadBva(py::bytes data){
@@ -526,26 +556,32 @@ PYBIND11_MODULE(J3DUltra, m) {
         .def("attachBrk", py::overload_cast<std::shared_ptr<J3DModelInstance>, py::bytes>(&attachBrk), py::kw_only(), py::arg("data"))
         .def("attachBrk", py::overload_cast<std::shared_ptr<J3DModelInstance>, std::string>(&attachBrk), py::kw_only(), py::arg("path"))
         .def("attachBrk", &J3DModelInstance::SetRegisterColorAnimation, py::kw_only(), py::arg("anim"))
+        .def("detachBrk", &detachBrk)
         .def("getBrk", &J3DModelInstance::GetRegisterColorAnimation)
         .def("attachBtp", py::overload_cast<std::shared_ptr<J3DModelInstance>, py::bytes>(&attachBtp), py::kw_only(), py::arg("data"))
         .def("attachBtp", py::overload_cast<std::shared_ptr<J3DModelInstance>, std::string>(&attachBtp), py::kw_only(), py::arg("path"))
         .def("attachBtp", &J3DModelInstance::SetTexIndexAnimation, py::kw_only(), py::arg("anim"))
+        .def("detachBtp", &detachBtp)
         .def("getBtp", &J3DModelInstance::GetTexIndexAnimation)
         .def("attachBtk", py::overload_cast<std::shared_ptr<J3DModelInstance>, py::bytes>(&attachBtk), py::kw_only(), py::arg("data"))
         .def("attachBtk", py::overload_cast<std::shared_ptr<J3DModelInstance>, std::string>(&attachBtk), py::kw_only(), py::arg("path"))
         .def("attachBtk", &J3DModelInstance::SetTexMatrixAnimation, py::kw_only(), py::arg("anim"))
+        .def("detachBtk", &detachBtk)
         .def("getBtk", &J3DModelInstance::GetTexMatrixAnimation)
         .def("attachBck", py::overload_cast<std::shared_ptr<J3DModelInstance>, py::bytes>(&attachBck), py::kw_only(), py::arg("data"))
         .def("attachBck", py::overload_cast<std::shared_ptr<J3DModelInstance>, std::string>(&attachBck), py::kw_only(), py::arg("path"))
         .def("attachBck", &J3DModelInstance::SetJointAnimation, py::kw_only(), py::arg("anim"))
+        .def("detachBck", &detachBck)
         .def("getBck", &J3DModelInstance::GetJointAnimation)
         .def("attachBca", py::overload_cast<std::shared_ptr<J3DModelInstance>, py::bytes>(&attachBca), py::kw_only(), py::arg("data"))
         .def("attachBca", py::overload_cast<std::shared_ptr<J3DModelInstance>, std::string>(&attachBca), py::kw_only(), py::arg("path"))
         .def("attachBca", &J3DModelInstance::SetJointFullAnimation, py::kw_only(), py::arg("anim"))
+        .def("detachBca", &detachBca)
         .def("getBca", &J3DModelInstance::GetJointFullAnimation)
         .def("attachBva", py::overload_cast<std::shared_ptr<J3DModelInstance>, py::bytes>(&attachBva), py::kw_only(), py::arg("data"))
         .def("attachBva", py::overload_cast<std::shared_ptr<J3DModelInstance>, std::string>(&attachBva), py::kw_only(), py::arg("path"))
         .def("attachBva", &J3DModelInstance::SetVisibilityAnimation, py::kw_only(), py::arg("anim"))
+        .def("detachBva", &detachBva)
         .def("getBva", &J3DModelInstance::GetVisibilityAnimation)
         ;
     
@@ -569,7 +605,7 @@ PYBIND11_MODULE(J3DUltra, m) {
     m.def("cleanup", &CleanupJ3DUltra, "Cleanup J3DUltra Library");
     m.def("setCamera", &SetCamera, "Set Projection and View Matrices to render with");
     
-    m.def("render", &RenderScene, "Execute all pending model renders");
+    m.def("render", &RenderScene, "Execute all pending model renders", py::arg("dt"), py::arg("cameraPos"), py::arg("renderPicking") = false);
 
     m.def("resizePicking", &ResizePickingFB, "");
     m.def("queryPicking", &QueryPicking, "");
