@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.4...3.18)
 project(J3DUltraPy)
 
-set(CMAKE_BUILD_TYPE Debug)
+message(STATUS "Build type is '${CMAKE_BUILD_TYPE}'")
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
