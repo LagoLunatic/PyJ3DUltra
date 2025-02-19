@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import glfw
 import itertools
 import numpy as np
